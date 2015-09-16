@@ -32,10 +32,13 @@ var groups      = {};
 app.get("/refresh", function(req, res, next){
   var results = {};
   filter = req.param("filter") ? JSON.parse(req.param("filter")) : {}
+  console.log(filter);  
   for(dimension in groups){
-    var group = groups[dimension]
+    console.log(dimension);
+    var group = groups[dimension];
     if(filter[dimension]){
-      dimension.filter(filter[dimension]);
+      console.log(dimension);
+      dimensions[dimension].filter(filter[dimension]);
     }
     results[dimension]= {values:group.all(),top: group.top(1)[0].value};
   }
@@ -221,6 +224,10 @@ anyToJSON.csv({path: "data/ndx.csv"}, function(data){
     });
     var dayOfWeekGroup = dayOfWeek.group();
 
+      console.log(dimension);
+    dimensions.yearlyDimension = yearlyDimension;
+    dimensions.dayOfWeekGroup = dayOfWeek;
+    
     groups.yearlyPerformanceGroup = yearlyPerformanceGroup; 
     groups.monthlyMoveGroup = monthlyMoveGroup; 
     groups.volumeByMonthGroup = volumeByMonthGroup;
